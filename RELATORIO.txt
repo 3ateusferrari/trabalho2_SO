@@ -1,0 +1,104 @@
+============================
+RELATÓRIO - Simulador de Gerenciamento de Memória com Paginação
+============================
+
+1. Principais Partes do Código
+-----------------------------
+- main.c: Responsável pelo menu principal, leitura das configurações iniciais e chamada das funções principais do simulador.
+- memoria.c/h: Gerencia a memória física, incluindo alocação, liberação, visualização e controle dos quadros livres (mapa de bits).
+- processo.c/h: Gerencia os processos, incluindo criação, inicialização da memória lógica, montagem da tabela de páginas, visualização da tabela de páginas e liberação dos recursos dos processos.
+- Makefile: Facilita a compilação do projeto.
+- README.md: Instruções básicas de uso e organização dos arquivos.
+
+Principais estruturas:
+- Memória física: vetor de bytes, dividido em quadros de tamanho configurável.
+- Mapa de quadros livres: vetor de inteiros (1 = livre, 0 = ocupado).
+- Processo: struct com PID, tamanho, memória lógica, tabela de páginas e ponteiro para próximo processo (lista encadeada).
+- Tabela de páginas: vetor de inteiros, mapeando páginas lógicas para quadros físicos.
+
+2. Instruções para Compilação e Execução
+----------------------------------------
+
+Para compilar o projeto, utilize:
+
+    make
+
+Para executar o simulador:
+
+    ./simulador
+
+O programa solicitará os seguintes parâmetros:
+- Tamanho da memória física (bytes)
+- Tamanho da página/quadro (bytes)
+- Tamanho máximo de um processo (bytes)
+
+Depois, o menu principal será exibido com as opções:
+1. Visualizar memória física
+2. Criar processo
+3. Visualizar tabela de páginas de um processo
+0. Sair
+
+3. Casos de Teste Executados
+---------------------------
+
+### Caso 1: Inicialização e visualização da memória
+
+Configuração:
+- Memória física: 64 bytes
+- Página: 16 bytes
+- Máximo processo: 32 bytes
+
+Saída esperada ao visualizar memória:
+
+Memória Física: 64 bytes, 4 quadros de 16 bytes
+Quadros livres: 4/4 (100.00% livre)
+Quadro  0: LIVRE  | 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Quadro  1: LIVRE  | 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Quadro  2: LIVRE  | 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Quadro  3: LIVRE  | 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+### Caso 2: Criação de processo e visualização da memória
+
+Criar processo:
+- PID: 1
+- Tamanho: 20 bytes
+
+Saída esperada ao criar:
+Processo criado com sucesso! PID=1, 20 bytes, 2 páginas.
+
+Visualizar memória:
+Memória Física: 64 bytes, 4 quadros de 16 bytes
+Quadros livres: 2/4 (50.00% livre)
+Quadro  0: OCUPADO | XX XX ... (valores aleatórios)
+Quadro  1: OCUPADO | XX XX ... (valores aleatórios)
+Quadro  2: LIVRE   | 00 00 ...
+Quadro  3: LIVRE   | 00 00 ...
+
+### Caso 3: Visualizar tabela de páginas
+
+PID: 1
+
+Saída esperada:
+Processo PID=1
+Tamanho: 20 bytes
+Número de páginas: 2
+Tabela de páginas (página -> quadro):
+Página  0 -> Quadro  0
+Página  1 -> Quadro  1
+
+### Caso 4: Tentativa de criar processo maior que o permitido
+
+PID: 2
+Tamanho: 40 bytes
+
+Saída esperada:
+Tamanho excede o máximo permitido (32 bytes)!
+
+### Caso 5: Tentativa de criar processo sem memória suficiente
+
+Criar vários processos até esgotar os quadros livres. Ao tentar criar um novo processo:
+
+Saída esperada:
+Memória insuficiente para alocar o processo!
+
+-----------------------------

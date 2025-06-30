@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static unsigned char *memoria_fisica = NULL;
+unsigned char *memoria_fisica = NULL;
 static int *quadros_livres = NULL; // 0 = ocupado, 1 = livre
 static int tamanho_memoria = 0;
 static int tamanho_pagina = 0;

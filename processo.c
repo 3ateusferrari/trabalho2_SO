@@ -92,7 +92,6 @@ void criar_processo_interativo() {
         if (offset_logico + bytes_para_copiar > tamanho) {
             bytes_para_copiar = tamanho - offset_logico;
         }
-        extern unsigned char *memoria_fisica; // hack: para copiar direto
         memcpy(&((unsigned char*)memoria_fisica)[quadro * tam_pagina], &novo->memoria_logica[offset_logico], bytes_para_copiar);
     }
     novo->prox = lista_processos;

@@ -17,7 +17,7 @@ Principais estruturas:
 - Tabela de páginas: vetor de inteiros, mapeando páginas lógicas para quadros físicos.
 
 2. Instruções para Compilação e Execução
-----------------------------------------
+-----------------------------------------
 
 Para compilar o projeto, utilize:
 

@@ -4,7 +4,7 @@
 #include <string.h>
 
 unsigned char *memoria_fisica = NULL;
-static int *quadros_livres = NULL; // 0 = ocupado, 1 = livre
+static int *quadros_livres = NULL;
 static int tamanho_memoria = 0;
 static int tamanho_pagina = 0;
 static int num_quadros = 0;
